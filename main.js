@@ -72,8 +72,29 @@ const ShowDate = {
   },
 };
 
-console.log(ShowDate.formatFullDate(new Date()));
+function createElement(selector, className = null) {
+  const el = document.createElement(selector);
+  className !== null ? (el.className = className) : null;
+  return el;
+}
+
+function replaceDate(selector, html) {
+  document.querySelector(`.${selector}`).remove();
+  let wrapper = createElement('div', selector);
+  wrapper.innerHTML = html;
+  document.body.append(wrapper);
+}
+
+function appendChild(selector, html) {
+  const wrapper = createElement('div', selector);
+  wrapper.innerHTML = html;
+  document.body.append(wrapper);
+}
+
+appendChild('first-wrapper', ShowDate.formatFullDate(new Date()));
+
+appendChild('second-wrapper', ShowDate.formatSimpleDate(new Date()));
 
 setInterval(() => {
-  console.log(ShowDate.formatSimpleDate(new Date()));
+  replaceDate('second-wrapper', ShowDate.formatSimpleDate(new Date()));
 }, 1000);
